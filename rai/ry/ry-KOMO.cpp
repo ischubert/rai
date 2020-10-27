@@ -108,6 +108,18 @@ pybind11::arg("object"))
   self.komo->addObjective(ARR(conf1, conf2), FS_poseDiff, {tableOrGripper, object}, OT_eq);
 })
 
+.def("addSquaredQuaternionNorms", [](ry::RyKOMO& self) {
+  self.komo->setSquaredQuaternionNorms();
+})
+
+.def("setTiming", [](ry::RyKOMO& self, double phases, uint stepsPerPhase, double durationPerPhase, uint k_order) {
+  self.komo->setTiming(phases, stepsPerPhase, durationPerPhase, k_order);
+})
+
+.def("setupConfigurations", [](ry::RyKOMO& self) {
+  self.komo->setupConfigurations();
+})
+
 .def("addSkeleton", [](ry::RyKOMO& self, const pybind11::list& L) {
   Skeleton S = list2skeleton(L);
   cout <<"SKELETON: " <<S <<endl;
@@ -143,6 +155,18 @@ pybind11::arg("initNoise")=0.01)
 
 .def("getT", [](ry::RyKOMO& self) {
   return self.komo->T;
+})
+
+.def("getConfigurations", [](ry::RyKOMO& self) {
+  return self.komo->configurations;
+})
+
+.def("getSparseOptimization", [](ry::RyKOMO& self) {
+  return self.komo->sparseOptimization;
+})
+
+.def("getDenseOptimization", [](ry::RyKOMO& self) {
+  return self.komo->denseOptimization;
 })
 
 .def("getConfiguration", [](ry::RyKOMO& self, int t) {
@@ -232,6 +256,9 @@ ENUMVAL(SY, liftDownUp)
 
 ENUMVAL(SY, contact)
 ENUMVAL(SY, bounce)
+
+ENUMVAL(SY, dampMotion)
+ENUMVAL(SY, quasiStaticOn)
 
 ENUMVAL(SY, magic)
 
