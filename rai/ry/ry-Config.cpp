@@ -27,6 +27,10 @@ void init_Config(pybind11::module &m) {
     pybind11::class_<ry::Config>(m, "Config", "This is a class docstring")
 .def(pybind11::init<>())
 
+.def("writeCollada", [](ry::Config& self, const std::string& fileName) {
+  self.get()->writeCollada(fileName.c_str());
+} )
+
 .def("clear", [](ry::Config& self) {
   self.set()->clear();
 } )
