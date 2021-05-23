@@ -51,6 +51,25 @@ void init_Simulation(pybind11::module &m) {
     return self.sim->getState();
   })
 
+  .def("openGripper", [](ry::RySimulation& self, const char* gripperFrameName, double width, double speed) {
+    auto lock = self.config->set();
+    self.sim->openGripper(gripperFrameName, width, speed);
+  }, "",
+    pybind11::arg("gripperFrameName"),
+    pybind11::arg("width") = .075,
+    pybind11::arg("speed") = .2
+  )
+
+  .def("closeGripper", [](ry::RySimulation& self, const char* gripperFrameName, double width, double speed, double force) {
+    auto lock = self.config->set();
+    self.sim->closeGripper(gripperFrameName, width, speed, force);
+  }, "",
+    pybind11::arg("gripperFrameName"),
+    pybind11::arg("width") = .05,
+    pybind11::arg("speed") = .1,
+    pybind11::arg("force") = 20.
+  )
+
 
   .def("get_qDot", [](ry::RySimulation& self) {
     arr qdot = self.sim->qdot();
