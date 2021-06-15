@@ -170,6 +170,7 @@ CPATH := $(CPATH):$(CPATHS:%=:%:)
 LPATH := $(LPATH):$(LPATHS:%=:%:)
 LDFLAGS += $(LPATHS:%=-L%) #$(LPATHS:%=-Wl,-rpath,%)
 LD_RUN_PATH := $(LD_RUN_PATH):$(LPATH)
+LPATH := $(shell echo "${LPATH}" | tr -d "[:space:]")
 LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(LPATH)
 export CPATH
 export LPATH
@@ -324,7 +325,7 @@ else
 endif
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) $(LIBS) -o $@ -c $<
 
 %.o: %.cxx
 	$(CXX) $(CXXFLAGS) -o $@ -c $<

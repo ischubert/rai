@@ -1223,7 +1223,7 @@ void rai::Shape::createMeshes() {
     } break;
     case rai::ST_cylinder:
       CHECK(size(-1)>1e-10, "");
-      mesh().setCylinder(size(-1), size(-2));
+      mesh().setCylinder(size(-1), size(-2), 4);
       break;
     case rai::ST_capsule:
       CHECK(size(-1)>1e-10, "");
